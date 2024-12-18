@@ -1,0 +1,1 @@
+{"root":["./src/index.ts","./src/config/typeorm.ts","./src/models/user.ts"],"errors":true,"version":"5.7.2"}

@@ -1,7 +1,10 @@
 import express from 'express';
-require('dotenv').config();
+import { Request, Response, NextFunction } from 'express';
 import AppDataSource from './config/typeorm';
 import bodyParser from 'body-parser';
+import { CustomError } from './types/error';
+
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 const port = 3000;
@@ -9,14 +12,25 @@ const port = 3000;
 // middleware to parse json data:
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
+app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!');
+});
+
+// Routes
+app.use('/auth', authRoutes);
+
+// Error handling middleware
+app.use((error: CustomError, req: Request, res: Response, next: NextFunction) => {
+  const status = error.statusCode || 500;
+  const message = error.message;
+  const data = error.data;
+  res.status(status).json({ message, data });
 });
 
 AppDataSource.initialize()
   .then(() => {
     console.log('Database connected!');
-    app.listen(3000, () => {
+    app.listen(port, () => {
       console.log('Server running on port 3000');
     });
   })
