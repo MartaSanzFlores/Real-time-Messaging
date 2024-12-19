@@ -4,7 +4,8 @@ import AppDataSource from './config/typeorm';
 import bodyParser from 'body-parser';
 import { CustomError } from './types/error';
 
-const authRoutes = require('./routes/authRoutes');
+import authRoutes from './routes/authRoutes';
+import adminRoutes from './routes/adminRoutes';
 
 const app = express();
 const port = 3000;
@@ -18,6 +19,7 @@ app.get('/', (req: Request, res: Response) => {
 
 // Routes
 app.use('/auth', authRoutes);
+app.use('/admin', adminRoutes);
 
 // Error handling middleware
 app.use((error: CustomError, req: Request, res: Response, next: NextFunction) => {

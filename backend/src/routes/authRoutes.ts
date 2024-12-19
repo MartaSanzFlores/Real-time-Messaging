@@ -1,11 +1,10 @@
-const express = require('express');
-const router = express.Router();
-const { body } = require('express-validator');
-const authController = require('../controllers/authController');
-const { User } = require("../models/User");
+import express from 'express';
+import { body } from 'express-validator';
+import authController from '../controllers/authController';
+import { User } from '../models/User';
 import AppDataSource from '../config/typeorm';
 
-const userRepository = AppDataSource.getRepository(User);
+const router = express.Router();
 
 router.post(
     '/signup',
@@ -14,6 +13,7 @@ router.post(
             .isEmail()
             .withMessage('Please enter a valid email.')
             .custom(async (value: string) => {
+                const userRepository = AppDataSource.getRepository(User);
                 const existingUser = await userRepository.findOneBy({ email: value });
                 if (existingUser) {
                     throw new Error('E-Mail address already exists!');
@@ -33,10 +33,17 @@ router.post(
     authController.signup
 );
 
-router.post('/login', authController.login);
+router.post('/login', [
+    body('email')
+        .isEmail()
+        .withMessage('Please enter a valid email.')
+        .normalizeEmail(),
+    body('password')
+        .trim()
+], authController.login);
 
 
-module.exports = router;
+export default router;
 
 
 

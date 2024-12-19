@@ -3,7 +3,7 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 @Entity()
 export class User {
     @PrimaryGeneratedColumn()
-    id!: number;
+    id!: string;
 
     @Column()
     name!: string;
@@ -13,4 +13,11 @@ export class User {
 
     @Column()
     password!: string;
+
+    @Column({
+        type: "enum",
+        enum: ["user", "admin"],
+        default: "user"
+    })
+    role!: string;
 }

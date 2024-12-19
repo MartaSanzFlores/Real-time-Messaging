@@ -1,6 +1,7 @@
 import { DataSource } from 'typeorm';
 import { User } from '../models/User';
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 const AppDataSource = new DataSource({
   type: 'postgres',

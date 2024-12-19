@@ -1,24 +1,23 @@
-import { Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
+import bcrypt from 'bcryptjs';
+import { validationResult } from 'express-validator';
 import AppDataSource from '../config/typeorm';
+import { User } from '../models/User';
 import { CustomError } from '../types/error';
 
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
-const jwt = require('jsonwebtoken');
-const { User } = require("../models/User");
-const bcrypt = require("bcryptjs");
-const { validationResult } = require('express-validator');
-
-
-interface Request {
+interface AuthRequest extends Request {
     body: {
         name: string;
         email: string;
         password: string;
+        role: string;
     };
 }
 
-exports.signup = async (req: Request, res: Response, next: NextFunction) => {
+exports.signup = async (req: AuthRequest, res: Response, next: NextFunction) => {
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -37,10 +36,15 @@ exports.signup = async (req: Request, res: Response, next: NextFunction) => {
         const hashedPW = await bcrypt.hash(password, 12);
         const userRepository = AppDataSource.getRepository(User);
 
+        const [users, usersCount] = await userRepository.findAndCount();
+
+        const userRole = usersCount === 0 ? "admin" : "user";
+
         const user = userRepository.create({
             name: name,
             email: email,
             password: hashedPW,
+            role: userRole
         })
 
         const result = await userRepository.save(user);
@@ -84,16 +88,18 @@ exports.login = async (req: Request, res: Response, next: NextFunction) => {
             throw error;
         }
 
+        const jwt = require('jsonwebtoken');
         const token = jwt.sign(
             {
                 email: loadedUser.email,
-                userId: loadedUser.id
+                userId: loadedUser.id, 
+                role: loadedUser.role
             },
             process.env.JWT_SECRET,
             { expiresIn: '1h' }
         );
 
-        res.status(200).json({ message: "User logged in!", token: token, userId: loadedUser.id });
+        res.status(200).json({ message: "User logged in!", token: token, userId: loadedUser.id, role: loadedUser.role });
 
     } catch (err: any) {
 
@@ -104,3 +110,5 @@ exports.login = async (req: Request, res: Response, next: NextFunction) => {
 
     }
 }
+
+export default exports;
