@@ -4,9 +4,11 @@ import AppDataSource from './config/typeorm';
 import bodyParser from 'body-parser';
 import { CustomError } from './types/error';
 import mongoose from 'mongoose';
+import { initIO } from '../socket';
 
 import authRoutes from './routes/authRoutes';
 import adminRoutes from './routes/adminRoutes';
+import messageRoutes from './routes/messageRoutes';
 
 const app = express();
 const port = 3000;
@@ -21,6 +23,7 @@ app.get('/', (req: Request, res: Response) => {
 // Routes
 app.use('/auth', authRoutes);
 app.use('/admin', adminRoutes);
+app.use('/messages', messageRoutes);
 
 // Error handling middleware
 app.use((error: CustomError, req: Request, res: Response, next: NextFunction) => {
@@ -41,8 +44,13 @@ mongoose.connect(mongoUrl)
       .then(() => {
         console.log('PostgreSQL connected!');
         // Lancer le serveur une fois que les connexions sont réussies
-        app.listen(port, () => {
-          console.log('Server running on port 3000');
+        const server = app.listen(port, () => {
+          console.log('Server running on port ' + port);
+        });
+        //Socket.io
+        const io = initIO(server);
+        io.on('connection', socket => {
+          console.log('Client connected');
         });
       })
       .catch((error) => console.log('Database connection failed: ', error));
