@@ -33,17 +33,17 @@ app.use((error: CustomError, req: Request, res: Response, next: NextFunction) =>
   res.status(status).json({ message, data });
 });
 
-// Connexion à MongoDB avec Mongoose
-const mongoUrl = process.env.MONGO_URL || 'mongodb://db:27017/mydatabase'; // L'URL de connexion à MongoDB (elle devrait être définie dans votre .env)
-mongoose.connect(mongoUrl)
+// Server connection
+const mongoUrl = process.env.MONGO_URL || 'mongodb://db:27017/mydatabase';
+mongoose.connect(mongoUrl) // MongoDB connection
   .then(() => {
-    console.log('MongoDB connected');  // Affichage du message si MongoDB est connecté
+    console.log('MongoDB connected'); 
 
-    // Connexion à PostgreSQL avec TypeORM
+    // PostgreSQL connection
     AppDataSource.initialize()
       .then(() => {
         console.log('PostgreSQL connected!');
-        // Lancer le serveur une fois que les connexions sont réussies
+        // Start server
         const server = app.listen(port, () => {
           console.log('Server running on port ' + port);
         });
@@ -57,5 +57,5 @@ mongoose.connect(mongoUrl)
   })
   .catch((error) => {
     console.error('MongoDB connection failed: ', error);
-    process.exit(1); // Quitte le processus en cas d'échec de la connexion à MongoDB
+    process.exit(1);
   });
