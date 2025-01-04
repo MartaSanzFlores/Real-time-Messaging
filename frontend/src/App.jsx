@@ -1,35 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import Header from './components/Header';
+import Message from './components/Message';
+import MessageInput from './components/MessageInput';
+import AuthForm from './components/AuthForm';
+import AdminUsers from './components/AdminUsers';
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [currentPage, setcurrentPage] = useState("");
+
+  const handleLoginClick = () => {
+    setcurrentPage("login");
+  };
+
+  const handleSigninClick = () => {
+    setcurrentPage("signin");
+  };
+
+  const handleAdminUsersClick = () => {
+    setcurrentPage("users");
+  }
 
   return (
+
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Header onLoginClick={handleLoginClick} onSignInClick={handleSigninClick} onAdminUsersClick={handleAdminUsersClick} show={currentPage} />
+      {currentPage === "login" && (
+        <AuthForm show={currentPage} btnInput={'Login'}  />
+      )}
+      {currentPage === "signin" && (
+        <AuthForm show={currentPage} btnInput={'Sign in'} />
+      )}
+      {currentPage === "users" && (
+        <AdminUsers />
+      )}
+      {!currentPage && (
+        <div>
+          <main className="m-28 overflow-y-auto">
+            <Message />
+          </main>
+          <MessageInput />
+        </div>
+      )}
     </>
-  )
+  );
 }
 
-export default App
+export default App;
+
