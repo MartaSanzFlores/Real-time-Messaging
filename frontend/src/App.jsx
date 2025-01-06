@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Header from './components/Header';
-import Message from './components/Message';
-import MessageInput from './components/MessageInput';
+import Messages from './components/Messages';
 import AuthForm from './components/AuthForm';
 import AdminUsers from './components/AdminUsers';
 
@@ -26,7 +25,7 @@ function App() {
     <>
       <Header onLoginClick={handleLoginClick} onSignInClick={handleSigninClick} onAdminUsersClick={handleAdminUsersClick} show={currentPage} />
       {currentPage === "login" && (
-        <AuthForm show={currentPage} btnInput={'Login'}  />
+        <AuthForm show={currentPage} btnInput={'Login'} />
       )}
       {currentPage === "signin" && (
         <AuthForm show={currentPage} btnInput={'Sign in'} />
@@ -35,12 +34,9 @@ function App() {
         <AdminUsers />
       )}
       {!currentPage && (
-        <div>
-          <main className="m-28 overflow-y-auto">
-            <Message />
-          </main>
-          <MessageInput />
-        </div>
+        <main className="my-28 overflow-y-auto">
+          <Messages />
+        </main>
       )}
     </>
   );
