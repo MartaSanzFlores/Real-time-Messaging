@@ -3,6 +3,8 @@ import { validationResult } from 'express-validator';
 import { CustomError } from '../types/error';
 import Message from '../models/Message';
 import { getIO } from '../../socket';
+import { User } from '../models/User';
+import AppDataSource from '../config/typeorm';
 
 exports.getMessages = async (req: Request, res: Response, next: NextFunction) => {
 
@@ -47,9 +49,17 @@ exports.createMessage = async (req: UserRequest, res: Response, next: NextFuncti
 
     try {
 
+        const user = await AppDataSource.getRepository(User).findOne({ where: { id: senderId } });
+
+        if (!user) {
+            const error: CustomError = new Error('User not found.');
+            error.statusCode = 404;
+            return next(error);
+        }
+
         const message = new Message({
             content: content,
-            sender: senderId,
+            sender: user.name,
             status: 'sent'
         });
 
@@ -61,7 +71,7 @@ exports.createMessage = async (req: UserRequest, res: Response, next: NextFuncti
             message: {...(savedMessage as any)._doc }
         });
 
-        res.status(201).json({ message: "Message created!", messageId: savedMessage.id });
+        res.status(201).json({ message: "Message created!", savedMessage: savedMessage });
 
     } catch (err: any) {
 

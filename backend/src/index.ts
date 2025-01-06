@@ -16,6 +16,17 @@ const port = 3000;
 // middleware to parse json data:
 app.use(bodyParser.json());
 
+// CORS middleware
+app.use((req, res, next) => {
+  // Allow all origins with the wildcard '*'
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  // Allow the following headers:
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  // Allow the following methods:
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+  next();
+});
+
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!');
 });
