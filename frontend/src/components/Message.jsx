@@ -6,7 +6,6 @@ function Message({ senderName, date, content, status, senderId }) {
 
 
     return (
-      console.log(senderId, userId),
       <>
         <div className={"container mx-auto flex items-start gap-2.5 m-8" + (senderId == userId ? " justify-end" : "")}>
           <div className={"border-2 p-2 rounded-full" + (senderId == userId ? " border-[#633bfb] order-2" : " border-[#fbb03b] order-1")}>{initials}</div>

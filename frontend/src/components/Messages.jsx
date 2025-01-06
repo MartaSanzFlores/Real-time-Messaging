@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
+import openSocket from "socket.io-client";
 
 import Message from "./Message";
 import MessageInput from './MessageInput';
 
-function Messages( { userId } ) {
+const socket = openSocket("http://localhost:3000");
+
+function Messages() {
 
     const [isFetching, setIsFetching] = useState(false);
     const [messages, setMessages] = useState([]);
@@ -48,6 +51,7 @@ function Messages( { userId } ) {
 
             setError(err.message);
         }
+
     }
 
     useEffect(() => {
@@ -91,6 +95,29 @@ function Messages( { userId } ) {
         };
 
         fetchMessages();
+
+        // Listen for new messages
+        socket.on("messages", (data) => {
+
+            if (data.action === "create" && data.message.senderId !== localStorage.getItem("userId")) {
+                setMessages((prevMessages) => [
+                    ...prevMessages,
+                    {
+                        _id: data.message._id,
+                        content: data.message.content,
+                        senderName: data.message.senderName,
+                        senderId: data.message.senderId,
+                        status: data.message.status,
+                        createdAt: new Date(data.message.createdAt).toLocaleString(),
+                    },
+                ]);
+            }
+        });
+
+        return () => {
+            socket.off("messages");
+        }
+
     }, []);
 
     // Is error 
