@@ -21,7 +21,7 @@ exports.signup = async (req: AuthRequest, res: Response, next: NextFunction) => 
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        const error: CustomError = new Error('Validation failed.');
+        const error: CustomError = new Error(errors.array()[0].msg);
         error.statusCode = 422;
         error.data = errors.array();
         return next(error);
