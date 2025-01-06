@@ -17,7 +17,7 @@ function Messages() {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIyQHVzZXIuY29tIiwidXNlcklkIjoxMywicm9sZSI6InVzZXIiLCJpYXQiOjE3MzYxNTUzNTgsImV4cCI6MTczNjE1ODk1OH0.kUVQjbE-E4tmde7bro2jQNq4Wb8Ph-EhQrcIj4cD8GQ`,
+                    Authorization: "Bearer " + localStorage.getItem("token"),
                 },
                 body: JSON.stringify({
                     content: message,
@@ -51,6 +51,7 @@ function Messages() {
 
     useEffect(() => {
         const fetchMessages = async () => {
+
             try {
 
                 // loading
@@ -61,7 +62,7 @@ function Messages() {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIyQHVzZXIuY29tIiwidXNlcklkIjoxMywicm9sZSI6InVzZXIiLCJpYXQiOjE3MzYxNTUzNTgsImV4cCI6MTczNjE1ODk1OH0.kUVQjbE-E4tmde7bro2jQNq4Wb8Ph-EhQrcIj4cD8GQ`,
+                        Authorization: "Bearer " + localStorage.getItem("token"),
                     },
                 });
 

@@ -1,11 +1,12 @@
 import { useState } from 'react';
 
-function MessageInput({ onSendMessage}) {
+function MessageInput({ onSendMessage }) {
 
     const [message, setMessage] = useState('');
 
-    const handleSendMessage = () => {
-    
+    const handleSendMessage = (e) => {
+        e.preventDefault();
+
         // Check if message is empty
         if (message.trim() === '') {
             return;
@@ -20,7 +21,7 @@ function MessageInput({ onSendMessage}) {
 
     return (
         <div className="w-full fixed bottom-0 mt-4 p-8 bg-gray-100">
-            <div className="flex items-center w-full">
+            <form className="flex items-center w-full" onSubmit={ handleSendMessage }>
                 <input
                     type="text"
                     className="w-full bg-white placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pr-12 pl-4 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
@@ -30,13 +31,12 @@ function MessageInput({ onSendMessage}) {
                 />
                 <button
                     className="h-10 w-20 ml-2 rounded bg-gray-600 px-4 border text-center font-semibold text-white transition-all hover:bg-[#fbb03b]"
-                    type="button"
-                    onClick={handleSendMessage}
-                    >
+                    type="submit"
+                >
                     Send
                 </button>
-            </div>
-        </div> 
+            </form>
+        </div>
     )
 }
 
