@@ -59,7 +59,8 @@ exports.createMessage = async (req: UserRequest, res: Response, next: NextFuncti
 
         const message = new Message({
             content: content,
-            sender: user.name,
+            senderName: user.name,
+            senderId: senderId,
             status: 'sent'
         });
 

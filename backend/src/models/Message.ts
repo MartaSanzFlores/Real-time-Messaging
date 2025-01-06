@@ -16,7 +16,11 @@ const messageSchema = new Schema({
         enum: ['pending', 'sent', 'read'],
         default: 'pending'
     },
-    sender: {
+    senderName: {
+        type: String,
+        required: true
+    },
+    senderId: {
         type: String,
         required: true
     }
