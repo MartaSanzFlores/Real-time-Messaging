@@ -47,6 +47,8 @@ function AuthForm({ btnInput, show, onLoginSuccess, onSignInSuccess }) {
 
             // call the onLoginSuccess function if it exists
             if (onLoginSuccess) {
+                const userId = result.userId;
+                localStorage.setItem('userId', userId);
                 onLoginSuccess();
             }
 

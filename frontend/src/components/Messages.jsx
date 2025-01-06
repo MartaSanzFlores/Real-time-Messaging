@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Message from "./Message";
 import MessageInput from './MessageInput';
 
-function Messages() {
+function Messages( { userId } ) {
 
     const [isFetching, setIsFetching] = useState(false);
     const [messages, setMessages] = useState([]);
@@ -37,7 +37,8 @@ function Messages() {
                 {
                     _id: data.savedMessage._id,
                     content: data.savedMessage.content,
-                    sender: data.savedMessage.sender,
+                    senderName: data.savedMessage.senderName,
+                    senderId: data.savedMessage.senderId,
                     status: data.savedMessage.status,
                     createdAt: new Date(data.savedMessage.createdAt).toLocaleString(),
                 },
@@ -110,7 +111,8 @@ function Messages() {
                 messages.map((message) => (
                     <Message
                         key={message._id}
-                        name={message.sender}
+                        senderName={message.senderName}
+                        senderId={message.senderId}
                         date={message.createdAt}
                         content={message.content}
                         status={message.status}
