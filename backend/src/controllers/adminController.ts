@@ -47,6 +47,36 @@ exports.getUsers = async (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
+exports.getUser = async (req: UserRequest, res: Response, next: NextFunction) => {
+
+    const userId = req.params.id;
+
+    try {
+
+        const userRepository = AppDataSource.getRepository(User);
+
+        const user = await userRepository.findOne({ where: { id: userId } });
+
+        if (!user) {
+            const error: CustomError = new Error('User not found.');
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const { password, ...userWithoutPassword } = user;
+
+        res.status(200).json({ user: userWithoutPassword });
+
+    } catch (err: any) {
+
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+
+    }
+}
+
 exports.createUser = async (req: UserRequest, res: Response, next: NextFunction) => {
 
     const errors = validationResult(req);
@@ -92,7 +122,7 @@ exports.updateUser = async (req: UserRequest, res: Response, next: NextFunction)
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        const error: CustomError = new Error('Validation failed.');
+        const error: CustomError = new Error(errors.array()[0].msg);
         error.statusCode = 422;
         error.data = errors.array();
         return next(error);
@@ -102,7 +132,7 @@ exports.updateUser = async (req: UserRequest, res: Response, next: NextFunction)
     const userId = req.params.id;
     const newName = req.body.name;
     const newEmail = req.body.email;
-    const newPassword = req.body.password;
+    let newPassword = req.body.password;
     const newRole = req.body.role;
 
     try {
@@ -111,13 +141,23 @@ exports.updateUser = async (req: UserRequest, res: Response, next: NextFunction)
 
         const user = await userRepository.findOne({ where: { id: userId } });
 
-        const hashedPW = await bcrypt.hash(newPassword, 12);
-
         if (!user) {
             const error: CustomError = new Error('User not found.');
             error.statusCode = 404;
             throw error;
         }
+
+        if(newPassword === '') {
+            newPassword = user.password;
+        } else {
+            if(newPassword.length < 5) {
+                const error: CustomError = new Error('Password must be at least 5 characters long.');
+                error.statusCode = 422;
+                throw error;
+            }
+        }
+
+        const hashedPW = await bcrypt.hash(newPassword, 12);
 
         user.name = newName;
         user.email = newEmail;

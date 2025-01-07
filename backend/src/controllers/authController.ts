@@ -93,13 +93,14 @@ exports.login = async (req: Request, res: Response, next: NextFunction) => {
             {
                 email: loadedUser.email,
                 userId: loadedUser.id, 
+                userName: loadedUser.name,
                 role: loadedUser.role
             },
             process.env.JWT_SECRET,
             { expiresIn: '1h' }
         );
 
-        res.status(200).json({ message: "User logged in!", token: token, userId: loadedUser.id, role: loadedUser.role });
+        res.status(200).json({ message: "User logged in!", token: token });
 
     } catch (err: any) {
 

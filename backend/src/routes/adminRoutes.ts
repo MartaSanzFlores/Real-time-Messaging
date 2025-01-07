@@ -10,7 +10,9 @@ const router = express.Router();
 
 router.get('/getUsers', authenticate, isAdmin, adminController.getUsers);
 
-router.post('/createUser', authenticate, isAdmin, [
+router.get('/getUser/:id', authenticate, isAdmin, adminController.getUser);
+
+router.post('/createUser', authenticate, [
     body('email')
         .isEmail()
         .withMessage('Please enter a valid email.')
@@ -47,10 +49,6 @@ router.put('/updateUser/:id', authenticate, isAdmin, [
             return true;
         })
         .normalizeEmail(),
-    body('password')
-        .trim()
-        .isLength({ min: 5 })
-        .withMessage('Password must be at least 5 characters long.'),
     body('name')
         .trim()
         .notEmpty()
