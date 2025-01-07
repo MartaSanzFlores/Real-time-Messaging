@@ -1,6 +1,14 @@
-import logo from '../assets/logo.svg'
+import { jwtDecode } from 'jwt-decode';
+import logo from '../assets/logo.svg';
 
 function Header({ onLoginClick, onSignInClick, onAdminUsersClick, show, isAuthenticated, onLogoClick, onLogoutClick }) {
+
+    const token = localStorage.getItem('token');
+    let role = 'user';
+
+    if (token) {
+        role = jwtDecode(token).role;
+    }
 
     return (
         <header className="w-full fixed top-0 bg-gray-100">
@@ -8,8 +16,12 @@ function Header({ onLoginClick, onSignInClick, onAdminUsersClick, show, isAuthen
                 <button onClick={onLogoClick}>
                     <img className="w-28 object-cover" src={logo} alt="Logo" />
                 </button>
+                {isAuthenticated && (
+                    <p className="font-semibold">Welcome {jwtDecode(token).userName} !</p>
+                )}
                 <div className="flex space-x-8">
-                    {isAuthenticated && (
+
+                    {isAuthenticated && token && role === 'admin' && (
                         <button
                             onClick={onAdminUsersClick}
                             className={`text-gray-500 font-semibold hover:text-[#fbb03b] ${show === 'users' ? "text-[#fbb03b]" : ""

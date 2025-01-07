@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import openSocket from "socket.io-client";
+import { jwtDecode } from "jwt-decode";
 
 import Message from "./Message";
 import MessageInput from './MessageInput';
@@ -99,7 +100,11 @@ function Messages() {
         // Listen for new messages
         socket.on("messages", (data) => {
 
-            if (data.action === "create" && data.message.senderId !== localStorage.getItem("userId")) {
+            const token = localStorage.getItem("token");
+
+            const userId = jwtDecode(token).userId;
+
+            if (data.action === "create" && data.message.senderId != userId) {
                 setMessages((prevMessages) => [
                     ...prevMessages,
                     {
@@ -131,7 +136,7 @@ function Messages() {
     }
 
     return (
-        <>
+        <div className="min-h-screen my-40">
             {messages.length === 0 ? (
                 <p>No messages</p>
             ) : (
@@ -149,7 +154,7 @@ function Messages() {
             <MessageInput
                 onSendMessage={sendMessage}
             />
-        </>
+        </div>
 
     );
 }

@@ -55,29 +55,31 @@ function App() {
 
     <>
       <Header onLoginClick={handleLoginClick} onSignInClick={handleSigninClick} onAdminUsersClick={handleAdminUsersClick} onLogoClick={handleLogoClick} onLogoutClick={handleLogout} show={currentPage} isAuthenticated={isAuthenticated} />
-      {currentPage === "login" && (
-        <AuthForm
-          show={currentPage}
-          btnInput={'Login'}
-          onLoginSuccess={handleLoginSuccess}
-        />
-      )}
-      {currentPage === "signin" && (
-        <AuthForm
-          show={currentPage}
-          btnInput={'Sign in'}
-          onSignInSuccess={handleSignInSuccess}
-        />
-      )}
-      {currentPage === "users" && (
-        <AdminUsers />
-      )}
-      {currentPage === "messages" && isAuthenticated && (
-        <main className="my-28 overflow-y-auto">
+      <main className="min-h-screen overflow-y-auto">
+        {currentPage === "login" && (
+          <AuthForm
+            show={currentPage}
+            btnInput={'Login'}
+            onLoginSuccess={handleLoginSuccess}
+          />
+        )}
+        {currentPage === "signin" && (
+          <AuthForm
+            show={currentPage}
+            btnInput={'Sign in'}
+            onSignInSuccess={handleSignInSuccess}
+          />
+        )}
+        {currentPage === "users" && (
+          <AdminUsers />
+        )}
+        {currentPage === "messages" && isAuthenticated && (
+
           <Messages
           />
-        </main>
-      )}
+
+        )}
+      </main>
     </>
   );
 }
