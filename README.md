@@ -37,8 +37,8 @@ API documentation is provided via **Swagger**.
 ### 1. Clone the Repository
 First, clone the repository to your local machine:
 ```bash
-git clone https://github.com/yourusername/project-name.git
-cd project-name
+git clone https://github.com/MartaSanzF/Test-Kanbios.git
+cd TEST
 ```
 ### 2. Run the application
 Run the application with Docker
