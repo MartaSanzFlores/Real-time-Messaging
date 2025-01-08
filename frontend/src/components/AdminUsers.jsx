@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import AuthForm from "./AuthForm";
+import AlertMessage from "./AlertMessage";
 
 function AdminUsers() {
 
@@ -11,6 +12,8 @@ function AdminUsers() {
     const [isCreating, setIsCreating] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [user, setUser] = useState({});
+
+    const [alertMessage, setAlertMessage] = useState(null);
 
     // Fetch users
     const fetchUsers = async () => {
@@ -63,6 +66,11 @@ function AdminUsers() {
     async function handleCreateUserSubmit() {
         setIsCreating(false);
         fetchUsers();
+        
+        setAlertMessage('User created successfully.');
+        setTimeout(() => {
+            setAlertMessage(null);
+        }, 3000);
     }
 
     // Edit user
@@ -101,6 +109,12 @@ function AdminUsers() {
     async function handleEditUser() {
         setIsEditing(false);
         fetchUsers();
+
+        setAlertMessage('User edited successfully.');
+        setTimeout(() => {
+            setAlertMessage(null);
+        }, 3000);
+
     }
 
     // Delete user
@@ -126,6 +140,11 @@ function AdminUsers() {
 
             fetchUsers();
 
+            setAlertMessage('User deleted successfully.');
+            setTimeout(() => {
+                setAlertMessage(null);
+            }, 3000);
+
         } catch (err) {
 
             setError(err.message);
@@ -149,6 +168,12 @@ function AdminUsers() {
 
         <>
             <div className="min-h-screen flex flex-col items-start justify-center max-w-screen-lg mx-auto">
+
+                {alertMessage &&
+                    <div className="flex items-end justify-end w-full">
+                        <AlertMessage type="success" alertMessage={alertMessage} />
+                    </div>
+                }
 
                 <button
                     onClick={onCreateUserClick}

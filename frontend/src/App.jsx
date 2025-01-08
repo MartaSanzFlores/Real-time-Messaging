@@ -34,7 +34,11 @@ function App() {
   }
 
   const handleLogoClick = () => {
-    setCurrentPage("messages");
+    if (isAuthenticated) {
+      setCurrentPage("messages");
+    } else {
+      setCurrentPage("login");
+    }
   }
 
   const handleLoginSuccess = () => {

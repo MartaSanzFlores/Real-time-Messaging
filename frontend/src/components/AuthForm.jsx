@@ -100,7 +100,6 @@ function AuthForm({ btnInput, show, onLoginSuccess, onSignInSuccess, onCreateUse
             }
 
         } catch (error) {
-            console.error('Error:', error);
             setErrors({ apiError: 'An error occurred. Please try again later.' });
         }
     }
