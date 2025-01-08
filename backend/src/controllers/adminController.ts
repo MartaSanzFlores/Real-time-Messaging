@@ -147,21 +147,24 @@ exports.updateUser = async (req: UserRequest, res: Response, next: NextFunction)
             throw error;
         }
 
-        if(newPassword === '') {
+        if (newPassword === '') {
+
             newPassword = user.password;
+
         } else {
-            if(newPassword.length < 5) {
+            
+            if (newPassword.length < 5) {
                 const error: CustomError = new Error('Password must be at least 5 characters long.');
                 error.statusCode = 422;
                 throw error;
             }
-        }
 
-        const hashedPW = await bcrypt.hash(newPassword, 12);
+            const hashedPW = await bcrypt.hash(newPassword, 12);
+            user.password = hashedPW;
+        }
 
         user.name = newName;
         user.email = newEmail;
-        user.password = hashedPW;
 
         if (currentUserId == userId && newRole && newRole != user.role) {
             const error: CustomError = new Error('You cannot change your own role.');
@@ -186,7 +189,7 @@ exports.updateUser = async (req: UserRequest, res: Response, next: NextFunction)
 }
 
 exports.deleteUser = async (req: UserRequest, res: Response, next: NextFunction) => {
-    
+
     const userId = req.params.id;
 
     try {
@@ -202,7 +205,7 @@ exports.deleteUser = async (req: UserRequest, res: Response, next: NextFunction)
             throw error;
         }
 
-        if(currentUserId == userId) {
+        if (currentUserId == userId) {
             const error: CustomError = new Error('You cannot delete your own user.');
             error.statusCode = 403;
             throw error;
