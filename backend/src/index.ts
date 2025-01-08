@@ -1,4 +1,5 @@
 import express from 'express';
+import { setupSwagger } from '../swagger';
 import { Request, Response, NextFunction } from 'express';
 import AppDataSource from './config/typeorm';
 import bodyParser from 'body-parser';
@@ -15,6 +16,9 @@ const port = 3000;
 
 // middleware to parse json data:
 app.use(bodyParser.json());
+
+// Setup Swagger documentation
+setupSwagger(app);
 
 // CORS middleware
 app.use((req, res, next) => {

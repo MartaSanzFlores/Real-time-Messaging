@@ -84,42 +84,42 @@ exports.createMessage = async (req: UserRequest, res: Response, next: NextFuncti
     }
 };
 
-exports.isRead = async (req: Request, res: Response, next: NextFunction) => {
+// exports.isRead = async (req: Request, res: Response, next: NextFunction) => {
     
-    const messageId = req.params.id;
+//     const messageId = req.params.id;
 
-    try {
+//     try {
 
-        const message = await Message.findById(messageId);
+//         const message = await Message.findById(messageId);
 
-        if (!message) {
-            const error: CustomError = new Error('Message not found.');
-            error.statusCode = 404;
-            return next(error);
-        }
+//         if (!message) {
+//             const error: CustomError = new Error('Message not found.');
+//             error.statusCode = 404;
+//             return next(error);
+//         }
 
-        message.status = 'read';
+//         message.status = 'read';
 
-        const updatedMessage = await message.save();
+//         const updatedMessage = await message.save();
 
-        // websocket
-        getIO().emit('messages', {
-            action: 'update',
-            message: {...(updatedMessage as any)._doc }
-        });
+//         // websocket
+//         getIO().emit('messages', {
+//             action: 'update',
+//             message: {...(updatedMessage as any)._doc }
+//         });
 
-        res.status(200).json({ message: "Message read!", messageId: updatedMessage.id });
+//         res.status(200).json({ message: "Message read!", messageId: updatedMessage.id });
 
-    }
+//     }
 
-    catch (err: any) {
+//     catch (err: any) {
 
-        if (!err.statusCode) {
-            err.statusCode = 500;
-        }
-        next(err);
+//         if (!err.statusCode) {
+//             err.statusCode = 500;
+//         }
+//         next(err);
 
-    }
-}
+//     }
+// }
 
 export default exports;

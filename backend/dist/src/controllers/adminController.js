@@ -46,6 +46,26 @@ exports.getUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         next(err);
     }
 });
+exports.getUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = req.params.id;
+    try {
+        const userRepository = typeorm_1.default.getRepository(User_1.User);
+        const user = yield userRepository.findOne({ where: { id: userId } });
+        if (!user) {
+            const error = new Error('User not found.');
+            error.statusCode = 404;
+            throw error;
+        }
+        const { password } = user, userWithoutPassword = __rest(user, ["password"]);
+        res.status(200).json({ user: userWithoutPassword });
+    }
+    catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+});
 exports.createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const errors = (0, express_validator_1.validationResult)(req);
     if (!errors.isEmpty()) {
@@ -80,7 +100,7 @@ exports.createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
 exports.updateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const errors = (0, express_validator_1.validationResult)(req);
     if (!errors.isEmpty()) {
-        const error = new Error('Validation failed.');
+        const error = new Error(errors.array()[0].msg);
         error.statusCode = 422;
         error.data = errors.array();
         return next(error);
@@ -89,20 +109,30 @@ exports.updateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     const userId = req.params.id;
     const newName = req.body.name;
     const newEmail = req.body.email;
-    const newPassword = req.body.password;
+    let newPassword = req.body.password;
     const newRole = req.body.role;
     try {
         const userRepository = typeorm_1.default.getRepository(User_1.User);
         const user = yield userRepository.findOne({ where: { id: userId } });
-        const hashedPW = yield bcryptjs_1.default.hash(newPassword, 12);
         if (!user) {
             const error = new Error('User not found.');
             error.statusCode = 404;
             throw error;
         }
+        if (newPassword === '') {
+            newPassword = user.password;
+        }
+        else {
+            if (newPassword.length < 5) {
+                const error = new Error('Password must be at least 5 characters long.');
+                error.statusCode = 422;
+                throw error;
+            }
+            const hashedPW = yield bcryptjs_1.default.hash(newPassword, 12);
+            user.password = hashedPW;
+        }
         user.name = newName;
         user.email = newEmail;
-        user.password = hashedPW;
         if (currentUserId == userId && newRole && newRole != user.role) {
             const error = new Error('You cannot change your own role.');
             error.statusCode = 403;

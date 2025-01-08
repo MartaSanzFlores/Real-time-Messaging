@@ -20,8 +20,24 @@ const express_validator_1 = require("express-validator");
 const typeorm_1 = __importDefault(require("../config/typeorm"));
 const User_1 = require("../models/User");
 const router = express_1.default.Router();
+/**
+ * @swagger
+ * tags:
+ *  name: Admin
+ * description: Admin routes
+ *  components:
+ *   securitySchemes:
+ *    bearerAuth:
+ *    type: http
+ *   scheme: bearer
+ *  bearerFormat: JWT
+ * security:
+ * - bearerAuth: []
+ *
+ */
 router.get('/getUsers', authMiddleware_1.default, checkRoleMiddleware_1.default, adminController_1.default.getUsers);
-router.post('/createUser', authMiddleware_1.default, checkRoleMiddleware_1.default, [
+router.get('/getUser/:id', authMiddleware_1.default, checkRoleMiddleware_1.default, adminController_1.default.getUser);
+router.post('/createUser', authMiddleware_1.default, [
     (0, express_validator_1.body)('email')
         .isEmail()
         .withMessage('Please enter a valid email.')
@@ -56,10 +72,6 @@ router.put('/updateUser/:id', authMiddleware_1.default, checkRoleMiddleware_1.de
         return true;
     }))
         .normalizeEmail(),
-    (0, express_validator_1.body)('password')
-        .trim()
-        .isLength({ min: 5 })
-        .withMessage('Password must be at least 5 characters long.'),
     (0, express_validator_1.body)('name')
         .trim()
         .notEmpty()

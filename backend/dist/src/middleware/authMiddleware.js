@@ -13,14 +13,20 @@ module.exports = (req, res, next) => {
         throw error;
     }
     const token = authHeader.split(' ')[1];
+    if (!token) {
+        const error = new Error('No Authenticated');
+        error.statusCode = 401;
+        throw error;
+    }
     let decodedToken;
     try {
         const jwt = require('jsonwebtoken');
         decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     }
     catch (err) {
-        err.statusCode = 500;
-        throw err;
+        const error = new Error('Your session has expired. Please log in again.');
+        error.statusCode = 401;
+        throw error;
     }
     if (!decodedToken) {
         const error = new Error('No Authenticated');

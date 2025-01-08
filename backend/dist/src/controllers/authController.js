@@ -21,7 +21,7 @@ dotenv_1.default.config();
 exports.signup = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const errors = (0, express_validator_1.validationResult)(req);
     if (!errors.isEmpty()) {
-        const error = new Error('Validation failed.');
+        const error = new Error(errors.array()[0].msg);
         error.statusCode = 422;
         error.data = errors.array();
         return next(error);
@@ -73,9 +73,10 @@ exports.login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
         const token = jwt.sign({
             email: loadedUser.email,
             userId: loadedUser.id,
+            userName: loadedUser.name,
             role: loadedUser.role
         }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.status(200).json({ message: "User logged in!", token: token, userId: loadedUser.id, role: loadedUser.role });
+        res.status(200).json({ message: "User logged in!", token: token });
     }
     catch (err) {
         if (!err.statusCode) {
