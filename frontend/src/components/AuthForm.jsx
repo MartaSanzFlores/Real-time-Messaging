@@ -182,7 +182,8 @@ function AuthForm({ btnInput, show, onLoginSuccess, onSignInSuccess, onCreateUse
                         required
                     />
                     {errors.password && <p className="text-red-600 text-sm mt-1">{errors.password}</p>}
-                    {errors.apiError && errors.apiError === 'Wrong password!' || errors.apiError === 'A user with this email could not be found.' ? <p className="text-red-600 text-sm mt-1">Incorrect email or password</p> : null}
+                    {errors.apiError && errors.apiError === 'A user with this email could not be found.' ? <p className="text-red-600 text-sm mt-1">Utilisateur non trouvé. Veuillez vérifier votre nom d'utilisateur ou créer un compte.</p> : null}
+                    {errors.apiError && errors.apiError === 'Wrong password!' ? <p className="text-red-600 text-sm mt-1">Incorrect email or password</p> : null}
                     {errors.apiError && errors.apiError === 'Password must be at least 5 characters long.' ? <p className="text-red-600 text-sm mt-1">Password must be at least 5 characters long</p> : null}
 
                 </div>
