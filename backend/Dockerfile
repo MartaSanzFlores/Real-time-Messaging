@@ -13,12 +13,10 @@ RUN npm install
 # Copier le reste des fichiers du projet
 COPY . .
 
-# Installer nodemon pour le rechargement automatique en développement
-RUN npm install -g nodemon
-
 # Exposer le port sur lequel l'application écoute
 EXPOSE 3000
 
 # Démarrer l'application avec nodemon pour développement
-CMD ["nodemon", "src/index.ts"]
+CMD ["node", "dist/index.js"]
+
 
