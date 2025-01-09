@@ -49,7 +49,7 @@ app.use((error: CustomError, req: Request, res: Response, next: NextFunction) =>
 });
 
 // Server connection
-const mongoUrl = process.env.MONGO_URL || 'mongodb://db:27017/mydatabase';
+const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost:27017/chat';
 mongoose.connect(mongoUrl) // MongoDB connection
   .then(() => {
     console.log('MongoDB connected'); 

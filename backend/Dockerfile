@@ -13,6 +13,8 @@ RUN npm install
 # Copier le reste des fichiers du projet
 COPY . .
 
+RUN npm run build
+
 # Exposer le port sur lequel l'application écoute
 EXPOSE 3000
 

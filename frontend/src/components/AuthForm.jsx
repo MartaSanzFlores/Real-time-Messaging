@@ -145,12 +145,12 @@ function AuthForm({ btnInput, show, onLoginSuccess, onSignInSuccess, onCreateUse
             <form className="w-96 mx-auto" onSubmit={handleSubmit} noValidate>
                 {show === 'signin' && (
                     <div className="mb-5">
-                        <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                        <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">Name</label>
                         <input
                             defaultValue={user ? user.name : ''}
                             type="text"
                             id="name"
-                            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             placeholder="Ex: Marta Sanz"
                             name="name"
                             required
@@ -159,12 +159,12 @@ function AuthForm({ btnInput, show, onLoginSuccess, onSignInSuccess, onCreateUse
                     </div>
                 )}
                 <div className="mb-5">
-                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Email</label>
                     <input
                         defaultValue={user ? user.email : ''}
                         type="email"
                         id="email"
-                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:[#fbb03b] focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:[#fbb03b] dark:focus:border-blue-500 dark:shadow-sm-light"
+                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:[#fbb03b] focus:border-blue-500 block w-full p-2.5"
                         placeholder="Ex: marta@exemple.com"
                         name="email"
                         required
@@ -173,11 +173,11 @@ function AuthForm({ btnInput, show, onLoginSuccess, onSignInSuccess, onCreateUse
                     {errors.apiError && errors.apiError === 'E-Mail address already exists!' ? <p className="text-red-600 text-sm mt-1">A user with this email already exists.</p> : null}
                 </div>
                 <div className="mb-5">
-                    <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{user ? 'New password' : 'Password'}</label>
+                    <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">{user ? 'New password' : 'Password'}</label>
                     <input
                         type="password"
                         id="password"
-                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:[#fbb03b] focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:[#fbb03b] dark:focus:border-blue-500 dark:shadow-sm-light"
+                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:[#fbb03b] focus:border-blue-500 block w-full p-2.5"
                         name="password"
                         required
                     />
@@ -188,11 +188,11 @@ function AuthForm({ btnInput, show, onLoginSuccess, onSignInSuccess, onCreateUse
                 </div>
                 {show === 'signin' && !user && (
                     <div className="mb-5">
-                        <label htmlFor="repeat-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Repeat password</label>
+                        <label htmlFor="repeat-password" className="block mb-2 text-sm font-medium text-gray-900">Repeat password</label>
                         <input
                             type="password"
                             id="repeat-password"
-                            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             name="repeat-password"
                             required />
                         {errors['repeat-password'] && <p className="text-red-600 text-sm mt-1">{errors['repeat-password']}</p>}
@@ -209,7 +209,7 @@ function AuthForm({ btnInput, show, onLoginSuccess, onSignInSuccess, onCreateUse
                                 name="role"
                                 className="w-4 h-4 text-blue-700 bg-gray-100 border-gray-300"
                             />
-                            <label htmlFor="roleUser" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">User</label>
+                            <label htmlFor="roleUser" className="ms-2 text-sm font-medium text-gray-900">User</label>
                         </div>
                         <div className="flex items-center">
                             <input
@@ -220,7 +220,7 @@ function AuthForm({ btnInput, show, onLoginSuccess, onSignInSuccess, onCreateUse
                                 name="role"
                                 className="w-4 h-4 text-blue-700 bg-gray-100 border-gray-300"
                             />
-                            <label htmlFor="roleAdmin" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Admin</label>
+                            <label htmlFor="roleAdmin" className="ms-2 text-sm font-medium text-gray-900">Admin</label>
                         </div>
                         {errors.apiError && errors.apiError === 'You cannot change your own role.' ? <p className="text-red-600 text-sm mt-1">You cannot change your own role</p> : null}
                     </div>
@@ -228,7 +228,7 @@ function AuthForm({ btnInput, show, onLoginSuccess, onSignInSuccess, onCreateUse
                 )}
                 <button
                     type="submit"
-                    className="text-white bg-gray-600 hover:bg-[#fbb03b] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    className="text-white bg-gray-600 hover:bg-[#fbb03b] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 >{btnInput}</button>
             </form>
         </div>

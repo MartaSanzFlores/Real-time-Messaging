@@ -12,7 +12,7 @@ function Header({ onLoginClick, onSignInClick, onAdminUsersClick, show, isAuthen
 
     return (
         <header className="w-full fixed top-0 bg-gray-100">
-            <nav className="container mx-auto flex justify-between items-center">
+            <nav className="container mx-auto px-10 flex justify-between items-center">
                 <button onClick={onLogoClick}>
                     <img className="w-28 object-cover" src={logo} alt="Logo" />
                 </button>
