@@ -138,7 +138,7 @@ function Messages() {
     return (
         <div className="min-h-screen my-40">
             {messages.length === 0 ? (
-                <p>No messages</p>
+                <p className="text-center">No messages yet</p>
             ) : (
                 messages.map((message) => (
                     <Message
