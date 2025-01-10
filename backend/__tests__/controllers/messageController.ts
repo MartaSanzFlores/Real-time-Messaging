@@ -2,10 +2,16 @@ import messageController from '../../src/controllers/messageController';
 import Message from '../../src/models/Message';
 import AppDataSource from '../../src/config/typeorm';
 import { getIO } from '../../socket';
+import { send } from 'process';
 
 const { validationResult } = require('express-validator');
 
 jest.mock('express-validator');
+jest.mock('../../src/models/Message');
+
+jest.mock('../../socket', () => ({
+    getIO: jest.fn()
+}));
 
 interface MockRequest {
     body: {
@@ -131,67 +137,105 @@ describe('Message Controller', () => {
 
     jest.setTimeout(10000);
 
-    // it('should create a message', async () => {
-    //     const req: MockRequest = {
-    //         body: {
-    //             content: 'Hello World'
-    //         },
-    //         user: {
-    //             userId: '1',
-    //             role: 'user'
-    //         }
-    //     };
+    it('should create a message and emit through WebSocket', async () => {
+        const req: MockRequest = {
+            body: {
+                content: 'Hello World'
+            },
+            user: {
+                userId: '1',
+                role: 'user'
+            }
+        };
 
-    //     const res = {
-    //         status: jest.fn(() => res),
-    //         json: jest.fn()
-    //     } as any;
+        const res = {
+            status: jest.fn(() => res),
+            json: jest.fn()
+        } as any;
 
-    //     const next = jest.fn();
+        const next = jest.fn();
 
-    //     // Mocking validationResult
-    //     validationResult.mockImplementation(() => {
-    //         return {
-    //             isEmpty: () => true
-    //         };
-    //     });
+        // Mocking validationResult
+        validationResult.mockImplementation(() => {
+            return {
+                isEmpty: () => true
+            };
+        });
 
-    //     // Mocking AppDataSource.getRepository
-    //     jest.spyOn(AppDataSource, 'getRepository').mockReturnValue({
-    //         findOne: jest.fn(() => ({ id: '1', name: 'John Doe' })),
-    //     } as any);
+        // Mock User repository to return a user
+        const mockUser = { id: '1', name: 'John Doe' };
+        jest.spyOn(AppDataSource, 'getRepository').mockReturnValue({
+            findOne: jest.fn(() => mockUser)
+        } as any);
 
+        // Mock the save method of Message
+        const mockSave = jest.fn().mockResolvedValue({
+            id: '1',
+            content: 'Hello World',
+            status: 'sent',
+            senderId: '1',
+            senderName: 'John Doe',
+            _doc: { // Mock the _doc property
+                id: '1',
+                content: 'Hello World',
+                status: 'sent',
+                senderId: '1',
+                senderName: 'John Doe'
+            }
+        });
 
-    //     // Mocking MongoDB Message model
-    //     jest.mock('../../src/models/Message', () => {
-    //         return jest.fn().mockImplementation(() => {
-    //             return {
-    //                 save: jest.fn(() => ({
-    //                     _doc: { content: 'Hello World', senderName: 'John Doe', senderId: '1', status: 'sent' }
-    //                 }))
-    //             };
-    //         });
-    //     });
+        // Mock the save method of Message
+        Message.prototype.save = mockSave;
 
-    //     // Mocking getIO for WebSocket
-    //     const mockEmit = jest.fn();
-    //     jest.mock('../../socket', () => {
-    //         return {
-    //             getIO: jest.fn(() => ({
-    //                 emit: mockEmit
-    //             }))
-    //         };
-    //     });
+        // Mock getIO to return a mock socket object with an emit method
+        const mockEmit = jest.fn();
+        const mockSocket = {
+            emit: mockEmit
+        };
 
-    //     await messageController.createMessage(req, res, next);
+        // Ensure that getIO() returns the mock socket
+        (getIO as jest.Mock).mockReturnValue(mockSocket);
 
-    //     expect(res.status).toHaveBeenCalledWith(201);
+        // Call the controller method
+        await messageController.createMessage(req, res, next);
 
-    //     expect(res.json).toHaveBeenCalledWith({
-    //         message: 'Message created!',
-    //         savedMessage: { content: 'Hello World', senderName: 'John Doe', senderId: '1', status: 'sent' }
-    //     });
+        // Ensure status(201) is called
+        expect(res.status).toHaveBeenCalledWith(201);
 
-    // });
+        // Ensure the correct message is returned in the response
+        expect(res.json).toHaveBeenCalledWith({
+            message: 'Message created!',
+            savedMessage: {
+                id: '1',
+                content: 'Hello World',
+                senderId: '1',
+                senderName: 'John Doe',
+                status: 'sent',
+                _doc: { // Mock the _doc property
+                    id: '1',
+                    content: 'Hello World',
+                    status: 'sent',
+                    senderId: '1',
+                    senderName: 'John Doe'
+                }
+            }
+        });
+
+        // Vérifie que mockEmit a bien été appelé une fois
+        expect(mockEmit).toHaveBeenCalledTimes(1);
+
+        // Vérifie que getIO().emit a bien été appelé avec les bons paramètres
+        expect(mockEmit).toHaveBeenCalledWith('messages', {
+            action: 'create',
+            message: expect.objectContaining({
+                id: '1',
+                content: 'Hello World',
+                senderId: '1',
+                senderName: 'John Doe',
+                status: 'sent'
+            })
+        });
+
+    });
 
 });
