@@ -45,9 +45,9 @@ function Header({ onLoginClick, onSignInClick, onAdminUsersClick, show, isAuthen
                                 onClick={onSignInClick}
                                 className={`text-gray-500 font-semibold hover:text-[#fbb03b] ${show === 'signin' ? "text-[#fbb03b]" : ""
                                     }`}
-                                aria-label="Sign in"
+                                aria-label="Sign up"
                             >
-                                Sign in
+                                Sign up
                             </button>
                         </>
                     )}

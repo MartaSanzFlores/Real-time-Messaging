@@ -70,7 +70,7 @@ function App() {
         {currentPage === "signin" && (
           <AuthForm
             show={currentPage}
-            btnInput={'Sign in'}
+            btnInput={'Sign up'}
             onSignInSuccess={handleSignInSuccess}
           />
         )}

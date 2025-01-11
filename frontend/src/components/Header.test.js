@@ -20,9 +20,9 @@ describe("Header", () => {
         expect(loginButton).toBeInTheDocument();
     });
 
-    test("renders the sign in button", () => {
+    test("renders the sign up button", () => {
         render(<Header />);
-        const signInButton = screen.getByText("Sign in");
+        const signInButton = screen.getByText("Sign up");
         expect(signInButton).toBeInTheDocument();
     });
 
@@ -106,10 +106,10 @@ describe("Header", () => {
         expect(onLoginClick).toHaveBeenCalled();
     });
 
-    test("calls onSignInClick when the sign in button is clicked", () => {
+    test("calls onSignInClick when the sign up button is clicked", () => {
         const onSignInClick = jest.fn();
         render(<Header onSignInClick={onSignInClick} />);
-        const signInButton = screen.getByText("Sign in");
+        const signInButton = screen.getByText("Sign up");
         fireEvent.click(signInButton);
         expect(onSignInClick).toHaveBeenCalled();
     });
