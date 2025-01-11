@@ -30,7 +30,7 @@ API documentation is provided via **Swagger**.
 ## Prerequisites
 - **Docker**: Ensure you have Docker installed to run the project in containers.
 - **Node.js**: Required for development and building the backend.
-- **npm or yarn**: Required for managing dependencies.
+- **npm**: Required for managing dependencies.
 
 ## Getting Started
 
@@ -81,6 +81,23 @@ Here are some of the key API endpoints available in the backend:
 
 ## Real-time Messaging
 The chat feature uses **WebSockets** for real-time communication. After logging in, users can send and receive messages instantly. The chat system stores messages in MongoDB and is connected to the frontend using WebSocket.
+
+## Tests unitaires
+
+Tests for the backend have been written using **Jest**. These tests cover various API endpoints to ensure proper functionality and error handling.
+
+For the frontend, **Jest** and **React Testing Library** have been used to test the React components.
+
+To run the backend tests:
+```bash
+cd backend
+npm run test
+```
+To run the frontend tests:
+```bash
+cd frontend
+npm run test
+```
 
 ## Security Considerations
 
