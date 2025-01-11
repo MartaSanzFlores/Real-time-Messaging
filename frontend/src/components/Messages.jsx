@@ -127,7 +127,7 @@ function Messages() {
 
     // Is error 
     if (error) {
-        return <p className="text-center mt-32">{error}</p>;
+        return <p data-testid="error" className="text-center mt-32">{error}</p>;
     }
 
     // Is fetching

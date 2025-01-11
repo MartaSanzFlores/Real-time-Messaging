@@ -156,7 +156,7 @@ function AdminUsers() {
 
     // Is error 
     if (error) {
-        return <p className="text-center mt-32">{error}</p>;
+        return <p data-testid="error" className="text-center mt-32">{error}</p>;
     }
 
     // Is fetching
@@ -179,8 +179,7 @@ function AdminUsers() {
                     onClick={onCreateUserClick}
                     type="button"
                     className="mb-10 text-white bg-gray-600 hover:bg-[#fbb03b] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-start dark:bg-[#633bfb] dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >Create new user
-                </button>
+                >Create new user</button>
 
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -215,7 +214,7 @@ function AdminUsers() {
                     ) : (
 
                         users.map((user) => (
-                            <tbody key={user.id}>
+                            <tbody key={user.id} data-testid="user">
                                 <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {user.name}
@@ -228,6 +227,7 @@ function AdminUsers() {
                                     </td>
                                     <td className="px-6 py-4 text-right">
                                         <a
+                                            data-testid="editButton"
                                             onClick={() => onEditUserClick(user.id)}
                                             href="#"
                                             className="font-medium text-[#633bfb] dark:text-blue-500 hover:underline">
@@ -238,6 +238,7 @@ function AdminUsers() {
                                     <td className="px-6 py-4 text-right">
                                         {user.id !== jwtDecode(localStorage.getItem("token")).userId && (
                                             <a
+                                                data-testid="deleteButton"
                                                 onClick={() => handleDeleteUser(user.id)}
                                                 href="#"
                                                 className="font-medium text-red-600 dark:text-red-500 hover:underline">
@@ -265,7 +266,7 @@ function AdminUsers() {
                         </button>
                         <AuthForm
                             show={'signin'}
-                            btnInput={'Crate user'}
+                            btnInput={'Create user'}
                             onCreateUserSubmit={true}
                             onCreateUserSuccess={handleCreateUserSubmit}
                         />

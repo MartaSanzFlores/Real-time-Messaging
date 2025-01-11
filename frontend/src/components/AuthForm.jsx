@@ -142,7 +142,7 @@ function AuthForm({ btnInput, show, onLoginSuccess, onSignInSuccess, onCreateUse
     return (
 
         <div className="min-h-screen flex items-center justify-center">
-            <form className="w-96 mx-auto mt-20" onSubmit={handleSubmit} noValidate>
+            <form data-testid="authform" className="w-96 mx-auto mt-20" onSubmit={handleSubmit} noValidate>
                 {show === 'signin' && (
                     <div className="mb-5">
                         <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">Name</label>
