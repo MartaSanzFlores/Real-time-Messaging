@@ -1,4 +1,4 @@
-# My Project: Real-time Messaging with Admin Management
+# Test-Kanbios: Real-time Messaging with Admin Management
 
 ## Description
 This project is a full-stack application built with **React** for the frontend and **Node.js** for the backend API. It uses **TypeScript** for the server, with **PostgreSQL** for user management and **MongoDB** for storing messages for the real-time chat functionality. The backend includes a full authentication system (JWT-based), and a **WebSocket** server for real-time messaging.
