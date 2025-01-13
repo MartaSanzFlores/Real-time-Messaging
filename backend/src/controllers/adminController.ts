@@ -152,14 +152,17 @@ exports.updateUser = async (req: UserRequest, res: Response, next: NextFunction)
             newPassword = user.password;
 
         } else {
+
+            const passwordTrim = newPassword.trim();
+            console.log('pass', passwordTrim);
             
-            if (newPassword.length < 5) {
+            if (passwordTrim.length < 5) {
                 const error: CustomError = new Error('Password must be at least 5 characters long.');
                 error.statusCode = 422;
                 throw error;
             }
 
-            const hashedPW = await bcrypt.hash(newPassword, 12);
+            const hashedPW = await bcrypt.hash(passwordTrim, 12);
             user.password = hashedPW;
         }
 

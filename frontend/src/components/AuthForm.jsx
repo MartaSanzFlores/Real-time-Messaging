@@ -106,6 +106,7 @@ function AuthForm({ btnInput, show, onLoginSuccess, onSignInSuccess, onCreateUse
 
 
     function validateForm(data) {
+        console.log(data);
         const errors = {};
 
         if (!data.email) {
@@ -115,15 +116,18 @@ function AuthForm({ btnInput, show, onLoginSuccess, onSignInSuccess, onCreateUse
         }
 
         if (!user) {
+            const password = data.password.trim();
             if (!data.password) {
                 errors.password = 'Password is required';
-            } else if (data.password.length < 5) {
-                errors.password = 'Password must be at least 5 characters';
+            } else if (password.length < 5) {
+                errors.password = 'Password must be at least 5 characters without spaces';
             }
         }
 
         if (show === 'signin' && !user) {
-            if (!data.name) {
+
+            const name = data.name.trim();
+            if (!name) {
                 errors.name = 'Name is required';
             }
 
@@ -141,6 +145,8 @@ function AuthForm({ btnInput, show, onLoginSuccess, onSignInSuccess, onCreateUse
 
     return (
 
+        console.log(errors),
+
         <div className="min-h-screen flex items-center justify-center">
             <form data-testid="authform" className="w-96 mx-auto mt-20" onSubmit={handleSubmit} noValidate>
                 {show === 'signin' && (
@@ -156,6 +162,8 @@ function AuthForm({ btnInput, show, onLoginSuccess, onSignInSuccess, onCreateUse
                             required
                         />
                         {errors.name && <p className="text-red-600 text-sm mt-1">{errors.name}</p>}
+                        {errors.apiError && errors.apiError.includes('Name is required.')  ? <p className="text-red-600 text-sm mt-1">Name is required</p> : null}
+
                     </div>
                 )}
                 <div className="mb-5">
@@ -184,7 +192,7 @@ function AuthForm({ btnInput, show, onLoginSuccess, onSignInSuccess, onCreateUse
                     {errors.password && <p className="text-red-600 text-sm mt-1">{errors.password}</p>}
                     {errors.apiError && errors.apiError === 'A user with this email could not be found.' ? <p className="text-red-600 text-sm mt-1">Utilisateur non trouvé. Veuillez vérifier votre nom d'utilisateur ou créer un compte.</p> : null}
                     {errors.apiError && errors.apiError === 'Wrong password!' ? <p className="text-red-600 text-sm mt-1">Incorrect email or password</p> : null}
-                    {errors.apiError && errors.apiError === 'Password must be at least 5 characters long.' ? <p className="text-red-600 text-sm mt-1">Password must be at least 5 characters long</p> : null}
+                    {errors.apiError && errors.apiError === 'Password must be at least 5 characters long.' ? <p className="text-red-600 text-sm mt-1">Password must be at least 5 characters long without spaces</p> : null}
 
                 </div>
                 {show === 'signin' && !user && (

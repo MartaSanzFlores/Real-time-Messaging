@@ -178,11 +178,11 @@ function AdminUsers() {
                 <button
                     onClick={onCreateUserClick}
                     type="button"
-                    className="mb-10 text-white bg-gray-600 hover:bg-[#fbb03b] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-start dark:bg-[#633bfb] dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    className="mb-10 text-white bg-gray-600 hover:bg-[#fbb03b] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-start"
                 >Create new user</button>
 
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                         <tr>
                             <th scope="col" className="px-6 py-3">
                                 Name
@@ -205,7 +205,7 @@ function AdminUsers() {
 
                         <tbody>
                             <tr>
-                                <td className="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                                <td className="px-6 py-4 text-gray-900 whitespace-nowrap">
                                     No users found.
                                 </td>
                             </tr>
@@ -215,8 +215,8 @@ function AdminUsers() {
 
                         users.map((user) => (
                             <tbody key={user.id} data-testid="user">
-                                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <tr className="bg-white border-b hover:bg-gray-50">
+                                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                         {user.name}
                                     </th>
                                     <td className="px-6 py-4">
@@ -230,7 +230,7 @@ function AdminUsers() {
                                             data-testid="editButton"
                                             onClick={() => onEditUserClick(user.id)}
                                             href="#"
-                                            className="font-medium text-[#633bfb] dark:text-blue-500 hover:underline">
+                                            className="font-medium text-[#633bfb] hover:underline">
                                             Edit
                                         </a>
                                     </td>
@@ -241,7 +241,7 @@ function AdminUsers() {
                                                 data-testid="deleteButton"
                                                 onClick={() => handleDeleteUser(user.id)}
                                                 href="#"
-                                                className="font-medium text-red-600 dark:text-red-500 hover:underline">
+                                                className="font-medium text-red-600 hover:underline">
                                                 Delete
                                             </a>
                                         )}
@@ -260,7 +260,7 @@ function AdminUsers() {
                     <div className="fixed top-0 left-0 w-full h-full bg-gray-300 bg-opacity-80 flex items-center justify-center">
                         <button
                             onClick={() => setIsCreating(false)}
-                            className="absolute top-20 right-auto text-white bg-gray-400 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            className="absolute top-20 right-auto text-white bg-gray-400 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center"
                             aria-label="Close modal"
                         >Close
                         </button>
@@ -280,7 +280,7 @@ function AdminUsers() {
                     <div className="fixed top-0 left-0 w-full h-full bg-gray-300 bg-opacity-80 flex items-center justify-center">
                         <button
                             onClick={() => setIsEditing(false)}
-                            className="absolute top-20 right-auto text-white bg-gray-400 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            className="absolute top-20 right-auto text-white bg-gray-400 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center"
                             aria-label="Close modal"
                         >Close
                         </button>
