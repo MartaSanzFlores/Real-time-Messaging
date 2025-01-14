@@ -17,8 +17,11 @@ function Messages() {
 
     // Scroll to bottom
     const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        if (messagesEndRef.current && typeof messagesEndRef.current.scrollIntoView === "function") {
+            messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+        }
     };
+    
 
     const sendMessage = async (message) => {
         try {
