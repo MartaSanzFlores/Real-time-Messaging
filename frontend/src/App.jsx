@@ -59,7 +59,7 @@ function App() {
 
     <>
       <Header onLoginClick={handleLoginClick} onSignInClick={handleSigninClick} onAdminUsersClick={handleAdminUsersClick} onLogoClick={handleLogoClick} onLogoutClick={handleLogout} show={currentPage} isAuthenticated={isAuthenticated} />
-      <main className="min-h-screen overflow-y-auto">
+      <main className="h-screen">
         {currentPage === "login" && (
           <AuthForm
             show={currentPage}

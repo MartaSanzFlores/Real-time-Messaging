@@ -167,19 +167,20 @@ function AdminUsers() {
     return (
 
         <>
-            <div className="min-h-screen flex flex-col items-start justify-center max-w-screen-lg mx-auto">
+            <div className="min-h-screen flex flex-col items-start justify-center container mx-auto overflow-y-auto px-4">
 
-                {alertMessage &&
-                    <div className="flex items-end justify-end w-full">
+                <div className="flex items-center justify-between w-full mt-10">
+                    <button
+                        onClick={onCreateUserClick}
+                        type="button"
+                        className="mb-10 text-white bg-gray-600 hover:bg-[#fbb03b] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-start"
+                    >Create new user
+                    </button>
+
+                    {alertMessage &&
                         <AlertMessage type="success" alertMessage={alertMessage} />
-                    </div>
-                }
-
-                <button
-                    onClick={onCreateUserClick}
-                    type="button"
-                    className="mb-10 text-white bg-gray-600 hover:bg-[#fbb03b] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-start"
-                >Create new user</button>
+                    }
+                </div>
 
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">

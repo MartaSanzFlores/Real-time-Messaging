@@ -11,13 +11,13 @@ function Header({ onLoginClick, onSignInClick, onAdminUsersClick, show, isAuthen
     }
 
     return (
-        <header className="w-full fixed top-0 bg-gray-100">
-            <nav className="container mx-auto px-10 flex justify-between items-center">
+        <header className="w-screen fixed top-0 bg-gray-100 h-28">
+            <nav className="w-full max-w-screen-xl mx-auto px-10 flex justify-between items-center">
                 <button onClick={onLogoClick}>
                     <img className="w-28 object-cover" src={logo} alt="Logo" />
                 </button>
                 {isAuthenticated && (
-                    <p className="font-semibold">Welcome {jwtDecode(token).userName} !</p>
+                    <p className="hidden sm:block font-semibold">Welcome {jwtDecode(token).userName} !</p>
                 )}
                 <div className="flex space-x-8">
 

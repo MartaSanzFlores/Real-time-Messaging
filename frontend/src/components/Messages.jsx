@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import openSocket from "socket.io-client";
 import { jwtDecode } from "jwt-decode";
 
@@ -12,6 +12,13 @@ function Messages() {
     const [isFetching, setIsFetching] = useState(false);
     const [messages, setMessages] = useState([]);
     const [error, setError] = useState(null);
+
+    const messagesEndRef = useRef(null);
+
+    // Scroll to bottom
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
 
     const sendMessage = async (message) => {
         try {
@@ -47,6 +54,8 @@ function Messages() {
                     createdAt: new Date(data.savedMessage.createdAt).toLocaleString(),
                 },
             ]);
+
+            scrollToBottom();
 
         } catch (err) {
 
@@ -93,6 +102,7 @@ function Messages() {
             }
 
             setIsFetching(false);
+            scrollToBottom();
         };
 
         fetchMessages();
@@ -116,6 +126,8 @@ function Messages() {
                         createdAt: new Date(data.message.createdAt).toLocaleString(),
                     },
                 ]);
+
+                scrollToBottom();
             }
         });
 
@@ -124,6 +136,11 @@ function Messages() {
         }
 
     }, []);
+
+    useEffect(() => {
+        // Scroll to bottom when new message is added
+        scrollToBottom();
+    }, [messages]);
 
     // Is error 
     if (error) {
@@ -136,7 +153,7 @@ function Messages() {
     }
 
     return (
-        <div className="min-h-screen my-40">
+        <div className="h-full py-28 overflow-y-auto">
             {messages.length === 0 ? (
                 <p className="text-center">No messages yet</p>
             ) : (
@@ -151,9 +168,8 @@ function Messages() {
                     />
                 ))
             )}
-            <MessageInput
-                onSendMessage={sendMessage}
-            />
+            <div ref={messagesEndRef} />
+            <MessageInput onSendMessage={sendMessage} />
         </div>
 
     );

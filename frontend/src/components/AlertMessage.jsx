@@ -10,7 +10,7 @@ function AlertMessage({ type, alertMessage }) {
 
     return (
 
-        <div className={"p-4 mb-4 text-sm text " + color} role="alert">
+        <div className={"p-6 mb-6 text-base text " + color} role="alert">
             <span className="font-medium">{alertMessage}</span>
         </div>
 

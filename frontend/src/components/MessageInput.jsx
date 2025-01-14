@@ -20,7 +20,7 @@ function MessageInput({ onSendMessage }) {
     }
 
     return (
-        <div className="w-full fixed bottom-0 mt-4 p-8 bg-gray-100">
+        <div className="w-full fixed bottom-0 p-8 bg-gray-100 h-28">
             <form className="flex items-center w-full" onSubmit={ handleSendMessage }>
                 <input
                     type="text"

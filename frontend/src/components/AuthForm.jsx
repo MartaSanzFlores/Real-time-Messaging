@@ -106,7 +106,6 @@ function AuthForm({ btnInput, show, onLoginSuccess, onSignInSuccess, onCreateUse
 
 
     function validateForm(data) {
-        console.log(data);
         const errors = {};
 
         if (!data.email) {
@@ -144,8 +143,6 @@ function AuthForm({ btnInput, show, onLoginSuccess, onSignInSuccess, onCreateUse
     }
 
     return (
-
-        console.log(errors),
 
         <div className="min-h-screen flex items-center justify-center">
             <form data-testid="authform" className="w-96 mx-auto mt-20" onSubmit={handleSubmit} noValidate>
