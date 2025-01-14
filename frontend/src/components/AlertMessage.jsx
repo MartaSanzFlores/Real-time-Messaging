@@ -1,11 +1,11 @@
 function AlertMessage({ type, alertMessage }) {
 
-    let color = 'text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400';
+    let color = 'text-blue-800 rounded-lg bg-blue-50';
 
     if (type === 'success') {
-        color = 'text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400';
+        color = 'text-green-800 rounded-lg bg-green-50';
     } else if (type === 'danger') {
-        color = 'text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400';
+        color = 'text-red-800 rounded-lg bg-red-50';
     }
 
     return (

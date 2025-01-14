@@ -155,7 +155,7 @@ function Messages() {
     return (
         <div className="h-full py-28 overflow-y-auto">
             {messages.length === 0 ? (
-                <p className="text-center">No messages yet</p>
+                <p className="text-center mt-6">No messages yet</p>
             ) : (
                 messages.map((message) => (
                     <Message
