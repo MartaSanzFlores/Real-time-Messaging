@@ -1,4 +1,4 @@
-# Test-Kanbios: Real-time Messaging with Admin Management
+# Test-React-Nodejs: Real-time Messaging with Admin Management
 
 ## Description
 This project is a full-stack application built with **React** for the frontend and **Node.js** for the backend API. It uses **TypeScript** for the server, with **PostgreSQL** for user management and **MongoDB** for storing messages for the real-time chat functionality. The backend includes a full authentication system (JWT-based), and a **WebSocket** server for real-time messaging.
@@ -35,9 +35,9 @@ API documentation is provided via **Swagger**.
 ## Getting Started
 
 ### 1. Clone the Repository
-First, clone the repository to your local machine:
+First, clone the repository to your local machine:c
 ```bash
-git clone https://github.com/MartaSanzF/Test-Kanbios.git
+git clone https://github.com/MartaSanzFlores/Test-React-Nodejs.git
 ```
 ### 2. Run the application
 Run the application with Docker
