@@ -26,6 +26,11 @@ API documentation is provided via **Swagger**.
 - **Docker**: For containerizing both the frontend and backend
 - **Swagger**: For API documentation
 - **bcrypt**: For securely hashing user passwords
+  
+## Project Demo
+Click below to watch the project demo:
+
+[![Project Demo Thumbnail](https://github.com/MartaSanzFlores/Real-time-Messaging/blob/main/demo/img-messagerie.png)](https://youtu.be/RCSFUtevS9Q)
 
 ## Prerequisites
 - **Docker**: Ensure you have Docker installed to run the project in containers.
